@@ -2,36 +2,42 @@
 # Java
 # =========================
 *.class
-*.jar
+
 *.war
 *.ear
 
+# =========================
 # Directorios de compilación
-/build/
-/dist/
-/out/
-/target/
-
-# Archivos de log y temporales
-*.log
-hs_err_pid*
-replay_pid*
+# (en cualquier nivel)
+# =========================
+**/build/
+**/dist/
+**/out/
+**/target/
 
 # =========================
 # NetBeans
 # =========================
-/nbproject/private/
-/nbproject/configurations.xml
-/nbproject/*-private.xml
+**/nbproject/private/
+**/nbproject/configurations.xml
+**/nbproject/*-private.xml
 
 # =========================
 # IDEs
 # =========================
-/.idea/
-/.vscode/
+**/.idea/
+**/.vscode/
 *.iml
 
 # =========================
 # Archivos del sistema
 # =========================
 .DS_Store
+Thumbs.db
+
+# =========================
+# Logs y temporales
+# =========================
+*.log
+hs_err_pid*
+replay_pid*
