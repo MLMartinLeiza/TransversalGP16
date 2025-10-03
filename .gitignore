@@ -3,6 +3,10 @@
 # =========================
 *.class
 
+# Ignora JARs generados, pero permite los JARs de la carpeta lib
+*.jar
+!lib/*.jar
+
 *.war
 *.ear
 
