@@ -1,8 +1,10 @@
 package Vista;
 
 import Modelo.Alumno;
+import Modelo.Materia;
 import Persistencia.AlumnoData;
 import Persistencia.Conexion;
+import Persistencia.MateriaData;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +14,7 @@ public class TransversalGP16 {
 
     public static void main(String[] args) {
 
-        Alumno brayan = new Alumno(42278291, "Arce", "Brayan", LocalDate.of(1999, 12, 16), 1);
+        /*Alumno brayan = new Alumno(42278291, "Arce", "Brayan", LocalDate.of(1999, 12, 16), 1);
 
         AlumnoData alu = new AlumnoData();
 
@@ -82,7 +84,15 @@ public class TransversalGP16 {
 //  
 //        for (Alumno a : listaActivos) {
 //            System.out.println(a);
-//        }
+//        }*/
+        
+        Materia materia = new Materia("Matemática", 2025, 1);
+        
+        MateriaData materiaData = new MateriaData();
+        
+        materiaData.guardarMateria(materia);
+        
+        //Quedaste aca probando si cargaba una materia
     }
 
 }
