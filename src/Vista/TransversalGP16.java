@@ -86,13 +86,15 @@ public class TransversalGP16 {
 //            System.out.println(a);
 //        }*/
         
+        /*
+        // Prueba de cargar una materia
+        
         Materia materia = new Materia("Matemática", 2025, 1);
         
         MateriaData materiaData = new MateriaData();
         
-        materiaData.guardarMateria(materia);
+        materiaData.guardarMateria(materia);*/
         
-        //Quedaste aca probando si cargaba una materia
     }
 
 }
