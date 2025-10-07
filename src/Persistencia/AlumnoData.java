@@ -178,7 +178,7 @@ public class AlumnoData {
         }
     }
 
-    private void eliminarAumno(int idAlumno) {
+    public void eliminarAumno(int idAlumno) {
         String query = "DELETE FROM alumno WHERE idAlumno = ? ";
 
         try {
