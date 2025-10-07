@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.time.LocalDate;
 import java.util.List;
 
-
 public class TransversalGP16 {
 
     public static void main(String[] args) {
@@ -85,8 +84,7 @@ public class TransversalGP16 {
 //        for (Alumno a : listaActivos) {
 //            System.out.println(a);
 //        }*/
-        
-        /*
+ /*
         // Prueba de cargar una materia
         
         Materia materia = new Materia("Matemática", 2025, 1);
@@ -94,7 +92,17 @@ public class TransversalGP16 {
         MateriaData materiaData = new MateriaData();
         
         materiaData.guardarMateria(materia);*/
-        
+ 
+ 
+        // Prueba de buscar una Materia
+       /* MateriaData md = new MateriaData();
+
+        Materia m = md.buscarMateria("Matematica");
+
+        if (m != null) {
+            System.out.println("Materia encontrada" + m);
+        } */
+
     }
 
 }

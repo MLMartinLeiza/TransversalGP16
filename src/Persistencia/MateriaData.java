@@ -42,4 +42,31 @@ public class MateriaData {
         }
     }
 
+    public Materia buscarMateria(String nombreMateria) {
+        Materia materiaEncontrada = null;
+        String query = "SELECT * FROM materia WHERE nombre = ?";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, nombreMateria);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                materiaEncontrada = new Materia();
+                materiaEncontrada.setIdMateria(rs.getInt("idMateria"));
+                materiaEncontrada.setNombre(rs.getString("nombre"));
+                materiaEncontrada.setAnio(rs.getInt("anio"));
+                materiaEncontrada.setEstado(rs.getInt("estado"));
+            } else {
+                System.out.println("No se encontro la materia");
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Error al acceder a la tabla materia");
+        }
+        return materiaEncontrada;
+    }
+
 }
