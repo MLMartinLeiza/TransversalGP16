@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class TransversalGP16 {
-
+    
     public static void main(String[] args) {
 
         /*Alumno brayan = new Alumno(42278291, "Arce", "Brayan", LocalDate.of(1999, 12, 16), 1);
@@ -92,17 +92,23 @@ public class TransversalGP16 {
         MateriaData materiaData = new MateriaData();
         
         materiaData.guardarMateria(materia);*/
- 
- 
         // Prueba de buscar una Materia
-       /* MateriaData md = new MateriaData();
+        /* MateriaData md = new MateriaData();
 
         Materia m = md.buscarMateria("Matematica");
 
         if (m != null) {
             System.out.println("Materia encontrada" + m);
         } */
+        
 
+        // Prueba de actualizar una materia
+        /*Materia materia = new Materia(1, "Matemática 1", 2025, 1);
+        
+        MateriaData materiaData = new MateriaData();
+        
+        materiaData.modificarMateria(materia);*/
+        
     }
-
+    
 }

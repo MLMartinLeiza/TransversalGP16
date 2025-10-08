@@ -2,7 +2,7 @@ package Modelo;
 
 public class Materia {
 
-    private int idMateria = -1;
+    private int idMateria;
     private String nombre;
     private int anio;
     private int estado;
@@ -11,6 +11,13 @@ public class Materia {
     }
 
     public Materia(String nombre, int anio, int estado) {
+        this.nombre = nombre;
+        this.anio = anio;
+        this.estado = estado;
+    }
+
+    public Materia(int idMateria, String nombre, int anio, int estado) {
+        this.idMateria = idMateria;
         this.nombre = nombre;
         this.anio = anio;
         this.estado = estado;

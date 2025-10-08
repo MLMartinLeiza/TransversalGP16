@@ -32,10 +32,10 @@ public class MateriaData {
             if (rs.next()) {
                 m.setIdMateria(1);
             } else {
-                System.out.println("No se pudo obtener ID");
+                JOptionPane.showMessageDialog(null, "No se pudo obtener ID");
             }
             ps.close();
-            System.out.println("Guardado");
+            JOptionPane.showMessageDialog(null, "Guardado");
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se pudo acceder a la tabla materia");
@@ -59,14 +59,35 @@ public class MateriaData {
                 materiaEncontrada.setAnio(rs.getInt("anio"));
                 materiaEncontrada.setEstado(rs.getInt("estado"));
             } else {
-                System.out.println("No se encontro la materia");
+                JOptionPane.showMessageDialog(null, "No se encontro la materia");
             }
 
             ps.close();
         } catch (SQLException e) {
-            System.out.println("Error al acceder a la tabla materia");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
         }
         return materiaEncontrada;
+    }
+
+    public void modificarMateria(Materia m) {
+        String query = "UPDATE materia SET nombre=?, anio=? WHERE idMateria = ?";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+
+            ps.setString(1, m.getNombre());
+            ps.setInt(2, m.getAnio());
+            ps.setInt(3, m.getIdMateria());
+
+            int logrado = ps.executeUpdate();
+
+            if (logrado == 1) {
+                JOptionPane.showMessageDialog(null, "Materia actualizada");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
     }
 
 }
