@@ -153,4 +153,22 @@ public class MateriaData {
         return materias;
     }
 
+    public void eliminarMateria(int idMateria) {
+        String query = "DELETE FROM materia WHERE idMateria = ?";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, idMateria);
+            int eliminado = ps.executeUpdate();
+            
+            if(eliminado == 1){
+            JOptionPane.showMessageDialog(null, "Materia eliminada correctamente");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
+
+    }
+
 }
