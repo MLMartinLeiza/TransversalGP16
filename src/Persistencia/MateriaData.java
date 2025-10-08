@@ -90,4 +90,41 @@ public class MateriaData {
         }
     }
 
+    public void bajaLogicaMateria(int idMateria) {
+        String query = "UPDATE materia SET estado=0 WHERE IdMateria=?";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, idMateria);
+            int baja = ps.executeUpdate();
+
+            if (baja == 1) {
+                JOptionPane.showMessageDialog(null, "Materia eliminada");
+            }
+
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
+    }
+
+    public void altaLogicaMateria(int idMateria) {
+        String query = "UPDATE materia SET estado=1 WHERE idMateria=?";
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setInt(1, idMateria);
+            int alta = ps.executeUpdate();
+
+            if (alta == 1) {
+                JOptionPane.showMessageDialog(null, "Alta confirmada");
+            }
+            ps.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
+
+    }
+
 }

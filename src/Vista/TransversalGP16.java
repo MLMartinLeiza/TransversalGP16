@@ -109,6 +109,19 @@ public class TransversalGP16 {
         
         materiaData.modificarMateria(materia);*/
         
+        /*
+        // Pruebo baja lógica de una materia
+        
+        MateriaData materiaData = new MateriaData();
+        
+        materiaData.bajaLogicaMateria(1); */
+        
+        // Pruebo baja lógica de una materia
+        /*
+        MateriaData materiaData = new MateriaData();
+        
+        materiaData.altaLogicaMateria(1); */
+        
     }
     
 }
