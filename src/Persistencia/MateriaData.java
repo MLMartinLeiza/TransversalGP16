@@ -1,11 +1,14 @@
 package Persistencia;
 
+import Modelo.Alumno;
 import Modelo.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class MateriaData {
@@ -125,6 +128,29 @@ public class MateriaData {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
         }
 
+    }
+
+    public List<Materia> listarMaterias() {
+
+        String query = "SELECT idMateria, nombre, anio FROM materia WHERE estado=1";
+        List<Materia> materias = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAnio(rs.getInt("anio"));
+                materias.add(materia);
+
+                ps.close();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
+        }
+        return materias;
     }
 
 }

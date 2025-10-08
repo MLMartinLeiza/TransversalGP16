@@ -122,6 +122,13 @@ public class TransversalGP16 {
         
         materiaData.altaLogicaMateria(1); */
         
+        // Pruebo listar materias
+        /*
+        MateriaData materiaData = new MateriaData();
+        for(Materia m : materiaData.listarMaterias()){
+            System.out.println(m);
+        }  */
+            
     }
     
 }
