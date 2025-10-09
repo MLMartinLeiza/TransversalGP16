@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -31,6 +32,10 @@ public class Alumno {
         this.nombre = nombre;
         this.fechaNacimiento = fecha;
         this.estado = estado;
+    }
+
+    public Alumno(int dni, String apellido, String nombre, Instant fecha, boolean estado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
