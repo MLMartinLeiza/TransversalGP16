@@ -1,6 +1,5 @@
 package Persistencia;
 
-import Modelo.Alumno;
 import Modelo.Materia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import javax.swing.JOptionPane;
 
 public class MateriaData {
 
-    private final Connection conexion;
+    private Connection conexion = null;
 
     public MateriaData() {
         this.conexion = Conexion.conectar();
