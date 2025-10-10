@@ -1,13 +1,25 @@
 package Vista;
 
 import Modelo.Alumno;
-import java.time.Instant;
+import Persistencia.AlumnoData;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class VistaAlumno extends javax.swing.JInternalFrame {
-AlumnoData alumnoData = new AlumnoData();
+    
+    AlumnoData alumnoData = new AlumnoData();
+    
+    private DefaultTableModel modeloTabla;
     public VistaAlumno() {
         initComponents();
+        setTitle("Formulario de Alumno");
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
     }
 
@@ -60,6 +72,18 @@ AlumnoData alumnoData = new AlumnoData();
         jLabel6.setText("DNI");
 
         jLabel7.setText("Fecha de nacimiento");
+
+        jtnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtnombreActionPerformed(evt);
+            }
+        });
+
+        jtdni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtdniActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Activo");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -238,39 +262,111 @@ AlumnoData alumnoData = new AlumnoData();
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jbbajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbbajaActionPerformed
-        // TODO add your handling code here:
+              try {
+            int dni = Integer.parseInt(jtdni.getText());
+            Alumno alumno = alumnoData.buscarAlumnoPorDni(dni);
+            if (alumno != null) {
+                alumno.setActivo(false);
+                alumnoData.actualizarAlumno(alumno);
+                JOptionPane.showMessageDialog(this, "Alumno dado de baja.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el alumno.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al dar de baja: " + e.getMessage());
+        }
     }//GEN-LAST:event_jbbajaActionPerformed
 
     private void jbaltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbaltaActionPerformed
-          
+        try {
+            int dni = Integer.parseInt(jtdni.getText());
+            Alumno alumno = alumnoData.buscarAlumnoPorDni(dni);
+            if (alumno != null) {
+                alumno.setActivo(true);
+                alumnoData.actualizarAlumno(alumno);
+                JOptionPane.showMessageDialog(this, "Alumno dado de alta.");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el alumno.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al dar de alta: " + e.getMessage());
+        }
     }//GEN-LAST:event_jbaltaActionPerformed
 
     private void jbinsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbinsertarActionPerformed
-        try{
-            
+        try {
             int dni = Integer.parseInt(jtdni.getText());
             String apellido = jtapellido.getText();
             String nombre = jtnombre.getText();
-             Instant fecha = jDateChooser1.getDate().toInstant();
-          boolean estado = jCheckBox1.isSelected();
-          
-           Alumno alumno = new Alumno(dni, apellido, nombre, fecha, estado);
-        alumnoData.guardarAlumno(alumno);
-        
-        
-            
+            LocalDate fecha = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean estado = jCheckBox1.isSelected();
 
-                
-        }catch(Exception e){
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al insertar alumno: " + e.getMessage());
+            Alumno alumno = new Alumno(dni, apellido, nombre, fecha, estado);
+            alumnoData.guardarAlumno(alumno);
+
+            JOptionPane.showMessageDialog(this, "Alumno insertado correctamente.");
+            limpiarCampos();
+            cargarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al insertar alumno: " + e.getMessage());
         }
     }//GEN-LAST:event_jbinsertarActionPerformed
 
     private void jbeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            int dni = Integer.parseInt(jtdni.getText());
+            alumnoData.eliminarAlumnoPorDni(dni);
+            JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente.");
+            limpiarCampos();
+            cargarTabla();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar alumno: " + e.getMessage());
+        }
     }//GEN-LAST:event_jbeliminarActionPerformed
-    
 
+    private void jtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtnombreActionPerformed
+        
+    }//GEN-LAST:event_jtnombreActionPerformed
+
+    private void jtdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtdniActionPerformed
+       
+    }//GEN-LAST:event_jtdniActionPerformed
+    
+      private void limpiarCampos() {
+        jtnombre.setText("");
+        jtapellido.setText("");
+        jtdni.setText("");
+        jCheckBox1.setSelected(false);
+        jDateChooser1.setDate(null);
+
+    }
+
+    private void cargarTabla() {
+            modeloTabla.setRowCount(0); 
+        List<Alumno> alumnos = alumnoData.listarAlumnos();
+        for (Alumno a : alumnos) {
+            modeloTabla.addRow(new Object[]{
+                a.getIdAlumno(),
+                a.getDni(),
+                a.getApellido(),
+                a.getNombre(),
+                a.getFechaNac(),
+                a.isActivo()
+            });
+        }
+    }
+     private void armarCabeceraTabla() {
+        modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn("ID");
+        modeloTabla.addColumn("DNI");
+        modeloTabla.addColumn("Apellido");
+        modeloTabla.addColumn("Nombre");
+        modeloTabla.addColumn("Fecha Nac.");
+        modeloTabla.addColumn("Activo");
+        jTable1.setModel(modeloTabla);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;
@@ -295,17 +391,18 @@ AlumnoData alumnoData = new AlumnoData();
     private javax.swing.JTextField jtnombre;
     // End of variables declaration//GEN-END:variables
 
-    private static class AlumnoData {
+    private static class modeloTabla {
 
-        private static void actualizarAlumno(Alumno a) {
+        private static void setRowCount(int i) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
-        public AlumnoData() {
+        private static void addRow(Object[] object) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
-        private void guardarAlumno(Alumno alumno) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        public modeloTabla() {
         }
     }
+
 }

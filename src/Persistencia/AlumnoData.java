@@ -199,4 +199,16 @@ public class AlumnoData {
 
     }
 
+    public List<Alumno> listarAlumnos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Alumno buscarAlumnoPorDni(int dni) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void eliminarAlumnoPorDni(int dni) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

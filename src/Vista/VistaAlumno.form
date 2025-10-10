@@ -186,10 +186,16 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jtnombre">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtnombreActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jtapellido">
     </Component>
     <Component class="javax.swing.JTextField" name="jtdni">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtdniActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
       <Properties>
