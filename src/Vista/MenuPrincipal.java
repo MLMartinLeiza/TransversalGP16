@@ -7,6 +7,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         setLocationRelativeTo(null); // Centra la ventana
+        setExtendedState(MenuPrincipal.MAXIMIZED_BOTH); //Inicia el menu maximizado
         setTitle("Sistema de Universidad - TransversalGP16");
     }
 

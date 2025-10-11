@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AlumnoData {
@@ -31,7 +29,7 @@ public class AlumnoData {
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
-            ps.setInt(5, a.getEstado());
+            ps.setBoolean(5, a.isEstado());
 
             ps.executeUpdate();
 
@@ -52,7 +50,7 @@ public class AlumnoData {
 
     public void actualizarAlumno(Alumno a) {
 
-        String query = "UPDATE alumno SET dni= ?, apellido = ?, nombre = ?, fechaNacimiento = ?, estado = ? "
+        String query = "UPDATE alumno SET dni= ?, apellido = ?, nombre = ?, fechaNacimiento = ? "
                 + "WHERE idAlumno = ?";
 
         try {
@@ -62,8 +60,7 @@ public class AlumnoData {
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
-            ps.setInt(5, a.getEstado());
-            ps.setInt(6, a.getIdAlumno());
+            ps.setInt(5, a.getIdAlumno());
 
             int actualizado = ps.executeUpdate();
 
@@ -76,7 +73,7 @@ public class AlumnoData {
         }
     }
 
-    public Alumno buscarAlumnonDni(int dni) {
+    public Alumno buscarAlumnoDni(int dni) {
 
         String query = "SELECT * From alumno WHERE dni = ? ";
         Alumno alu = null;
@@ -95,7 +92,7 @@ public class AlumnoData {
                 alu.setApellido(rs.getString("apellido"));
                 alu.setNombre(rs.getString("nombre"));
                 alu.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alu.setEstado(rs.getInt("estado"));
+                alu.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "no se encontro un alumno con dni : " + dni);
             }
@@ -127,7 +124,7 @@ public class AlumnoData {
                 alu.setApellido(rs.getString("apellido"));
                 alu.setNombre(rs.getString("nombre"));
                 alu.setFechaNacimiento(rs.getDate("fechaNacimiento").toLocalDate());
-                alu.setEstado(rs.getInt("estado"));
+                alu.setEstado(rs.getBoolean("estado"));
 
                 alumnos.add(alu);
 
@@ -178,7 +175,7 @@ public class AlumnoData {
         }
     }
 
-    public void eliminarAumno(int idAlumno) {
+    public void eliminarAlumno(int idAlumno) {
         String query = "DELETE FROM alumno WHERE idAlumno = ? ";
 
         try {
@@ -197,18 +194,6 @@ public class AlumnoData {
 
         }
 
-    }
-
-    public List<Alumno> listarAlumnos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Alumno buscarAlumnoPorDni(int dni) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void eliminarAlumnoPorDni(int dni) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

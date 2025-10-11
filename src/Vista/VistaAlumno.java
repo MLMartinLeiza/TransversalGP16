@@ -247,7 +247,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         String nombre = jtnombre.getText();
         String apellido = jtapellido.getText();
         LocalDate fecha = jDateChooser1.getDate().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-        int estado = jCheckBox1.isSelected() ? 1 : 0;
+        boolean estado = jCheckBox1.isSelected();
 
         Alumno a = new Alumno(dni, apellido, nombre, fecha, estado);
         a.setIdAlumno(id);
@@ -264,9 +264,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private void jbbajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbbajaActionPerformed
               try {
             int dni = Integer.parseInt(jtdni.getText());
-            Alumno alumno = alumnoData.buscarAlumnoPorDni(dni);
+            Alumno alumno = alumnoData.buscarAlumnoDni(dni);
             if (alumno != null) {
-                alumno.setActivo(false);
+                alumno.setEstado(false);
                 alumnoData.actualizarAlumno(alumno);
                 JOptionPane.showMessageDialog(this, "Alumno dado de baja.");
                 cargarTabla();
@@ -281,9 +281,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private void jbaltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbaltaActionPerformed
         try {
             int dni = Integer.parseInt(jtdni.getText());
-            Alumno alumno = alumnoData.buscarAlumnoPorDni(dni);
+            Alumno alumno = alumnoData.buscarAlumnoDni(dni);
             if (alumno != null) {
-                alumno.setActivo(true);
+                alumno.setEstado(true);
                 alumnoData.actualizarAlumno(alumno);
                 JOptionPane.showMessageDialog(this, "Alumno dado de alta.");
                 cargarTabla();
@@ -317,7 +317,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private void jbeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarActionPerformed
         try {
             int dni = Integer.parseInt(jtdni.getText());
-            alumnoData.eliminarAlumnoPorDni(dni);
+            alumnoData.eliminarAlumno(dni);
             JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente.");
             limpiarCampos();
             cargarTabla();
@@ -345,15 +345,15 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
 
     private void cargarTabla() {
             modeloTabla.setRowCount(0); 
-        List<Alumno> alumnos = alumnoData.listarAlumnos();
+        List<Alumno> alumnos = alumnoData.listarAlumnosActivos();
         for (Alumno a : alumnos) {
             modeloTabla.addRow(new Object[]{
                 a.getIdAlumno(),
                 a.getDni(),
                 a.getApellido(),
                 a.getNombre(),
-                a.getFechaNac(),
-                a.isActivo()
+                a.getFechaNacimiento(),
+                a.isEstado()
             });
         }
     }
@@ -390,19 +390,5 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtdni;
     private javax.swing.JTextField jtnombre;
     // End of variables declaration//GEN-END:variables
-
-    private static class modeloTabla {
-
-        private static void setRowCount(int i) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        private static void addRow(Object[] object) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        public modeloTabla() {
-        }
-    }
 
 }
