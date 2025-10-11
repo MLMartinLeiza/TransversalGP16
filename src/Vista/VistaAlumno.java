@@ -317,8 +317,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private void jbeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarActionPerformed
         try {
             int dni = Integer.parseInt(jtdni.getText());
-            alumnoData.eliminarAlumno(dni);
-            JOptionPane.showMessageDialog(this, "Alumno eliminado correctamente.");
+            alumnoData.eliminarAlumnoDni(dni);
             limpiarCampos();
             cargarTabla();
         } catch (Exception e) {

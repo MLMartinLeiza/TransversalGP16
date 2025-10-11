@@ -175,17 +175,15 @@ public class AlumnoData {
         }
     }
 
-    public void eliminarAlumno(int idAlumno) {
-        String query = "DELETE FROM alumno WHERE idAlumno = ? ";
+    public void eliminarAlumnoDni(int dniAlumno) {
+        String query = "DELETE FROM alumno WHERE dni = ? ";
 
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
-            ps.setInt(1, idAlumno);
+            ps.setInt(1, dniAlumno);
             int elimina = ps.executeUpdate();
             if (elimina == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo eliminar");
             }
             ps.close();
 
