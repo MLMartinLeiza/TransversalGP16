@@ -20,10 +20,11 @@ public class VistaMateria extends javax.swing.JInternalFrame {
      */
     MateriaData materiadata = new MateriaData();
     
-    private DefaultTableModel modeloTabla;
+    private DefaultTableModel modelo = new DefaultTableModel();
     
     public VistaMateria() {
         initComponents();
+        armarCabecera();
         setTitle("Formulario de Materia");
         setClosable(true);
         setIconifiable(true);
@@ -46,7 +47,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTMateria = new javax.swing.JTable();
         jBInsertar = new javax.swing.JButton();
         jBActualizar = new javax.swing.JButton();
         jBBorrar = new javax.swing.JButton();
@@ -71,7 +72,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Listado de materias");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTMateria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -82,7 +83,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTMateria);
 
         jBInsertar.setText("Insertar");
         jBInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,6 +111,11 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jBBaja.setText("Baja");
 
         jBMostrar.setText("Mostrar");
+        jBMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBMostrarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Nombre de la Materia:");
 
@@ -269,6 +275,28 @@ public class VistaMateria extends javax.swing.JInternalFrame {
      
     }//GEN-LAST:event_jBBorrarActionPerformed
 
+    private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
+        // TODO add your handling code here:
+     try {
+         if (jtNombre.getText().isEmpty()|| jTidMateria.getText().isEmpty() ){
+             JOptionPane.showMessageDialog(this, "No debe haber campos vacios");
+             return; //sale del metodo si ahi error
+         }
+        
+        String nombre = jtNombre.getText();
+        String idMateria = jTidMateria.getText();
+        int anio = Integer.parseInt(jtAnio.getText()) ;
+        int estado = jCActivo.isSelected() ? 1 : 0 ;
+        
+        Materia m = new Materia (nombre, anio, estado);
+        cargarDatos (m);
+        
+      }catch (NumberFormatException nf){
+          JOptionPane.showMessageDialog(this, "El id debe ser un numero entero");
+          
+      }
+    }//GEN-LAST:event_jBMostrarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBActualizar;
@@ -287,9 +315,27 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTMateria;
     private javax.swing.JTextField jTidMateria;
     private javax.swing.JTextField jtAnio;
     private javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabecera (){
+        modelo.addColumn("Materia");
+        modelo.addColumn("id Materia");
+        modelo.addColumn("Año");
+        modelo.addColumn("Estado");
+        jTMateria.setModel(modelo);
+        
+    }
+    private void cargarDatos (Materia materia ){
+        modelo.addRow(new Object[]{
+            materia.getNombre(), materia.getIdMateria(), materia.getAnio(), materia.getEstado()
+            
+        });
+        
+    }
+
+
 }
