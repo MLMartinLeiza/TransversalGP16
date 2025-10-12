@@ -290,7 +290,18 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-
+      try{
+          int idMateria = Integer.parseInt(jTidMateria.getText());
+        materiaData.eliminarMateria(idMateria);
+        
+      }catch (Exception e){
+           JOptionPane.showMessageDialog(this, "Error al eliminar materia: " + e.getMessage());
+      }
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
