@@ -301,11 +301,11 @@ public class VistaMateria extends javax.swing.JInternalFrame {
             }
 
             String nombre = jtNombre.getText();
-            String idMateria = jTidMateria.getText();
+            int idMateria = Integer.parseInt(jTidMateria.getText());
             int anio = Integer.parseInt(jtAnio.getText());
             boolean estado = jCActivo.isSelected();
 
-            Materia m = new Materia(nombre, anio, estado);
+            Materia m = new Materia(idMateria, nombre, anio, estado);
             cargarDatos(m);
 
         } catch (NumberFormatException nf) {
