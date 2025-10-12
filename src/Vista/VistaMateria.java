@@ -4,8 +4,11 @@
  */
 package Vista;
 
+import Modelo.Alumno;
 import Modelo.Materia;
+import Persistencia.AlumnoData;
 import Persistencia.MateriaData;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,19 +21,20 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     /**
      * Creates new form VistaMateria
      */
-    MateriaData materiadata = new MateriaData();
-    
+    MateriaData materiaData = new MateriaData();
+
     private DefaultTableModel modelo = new DefaultTableModel();
-    
+
     public VistaMateria() {
         initComponents();
+        llenarComboAlumnos();
         armarCabecera();
         setTitle("Formulario de Materia");
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        
+
     }
 
     /**
@@ -44,7 +48,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxAlumnos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTMateria = new javax.swing.JTable();
@@ -67,8 +71,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jLabel1.setText("COMPLETE LOS DATOS");
 
         jLabel2.setText("Seleccion alumno:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setText("Listado de materias");
 
@@ -159,7 +161,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                                 .addGap(8, 8, 8)
                                 .addComponent(jLabel2)
                                 .addGap(28, 28, 28)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jComboBoxAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -199,7 +201,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(1, 1, 1)
                 .addComponent(jBInsertar)
@@ -240,25 +242,40 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInsertarActionPerformed
-        // TODO add your handling code here:
-     
-        
+        String nombre = jtNombre.getText().trim();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo nombre no puede estar vacío");
+            return;
+        }
+
+        try {
+            boolean estado = jCActivo.isSelected();
+
+            int anio = Integer.parseInt(jtAnio.getText());
+
+            Materia materia = new Materia(nombre, anio, estado);
+
+            materiaData.guardarMateria(materia);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Revise los campos ingresados");
+        }
+
     }//GEN-LAST:event_jBInsertarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
         // TODO add your handling code here:
         try {
-        int id = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Ingrese ID de la materia a actualizar"));
-        int anio = Integer.parseInt(jtAnio.getText());
-        String nombre = jtNombre.getText();
-        int estado = jCActivo.isSelected() ? 1 : 0;
-        
-            Materia m = new Materia (nombre, anio, estado);
+            int id = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Ingrese ID de la materia a actualizar"));
+            int anio = Integer.parseInt(jtAnio.getText());
+            String nombre = jtNombre.getText();
+            boolean estado = jCActivo.isSelected();
+
+            Materia m = new Materia(nombre, anio, estado);
             m.setIdMateria(id);
-            
-     }   catch (Exception e){
-           javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar materia " + e.getMessage());
-     }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar materia " + e.getMessage());
+        }
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtNombreActionPerformed
@@ -272,29 +289,29 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
         // TODO add your handling code here:
-     
+
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
         // TODO add your handling code here:
-     try {
-         if (jtNombre.getText().isEmpty()|| jTidMateria.getText().isEmpty() ){
-             JOptionPane.showMessageDialog(this, "No debe haber campos vacios");
-             return; //sale del metodo si ahi error
-         }
-        
-        String nombre = jtNombre.getText();
-        String idMateria = jTidMateria.getText();
-        int anio = Integer.parseInt(jtAnio.getText()) ;
-        int estado = jCActivo.isSelected() ? 1 : 0 ;
-        
-        Materia m = new Materia (nombre, anio, estado);
-        cargarDatos (m);
-        
-      }catch (NumberFormatException nf){
-          JOptionPane.showMessageDialog(this, "El id debe ser un numero entero");
-          
-      }
+        try {
+            if (jtNombre.getText().isEmpty() || jTidMateria.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No debe haber campos vacios");
+                return; //sale del metodo si ahi error
+            }
+
+            String nombre = jtNombre.getText();
+            String idMateria = jTidMateria.getText();
+            int anio = Integer.parseInt(jtAnio.getText());
+            boolean estado = jCActivo.isSelected();
+
+            Materia m = new Materia(nombre, anio, estado);
+            cargarDatos(m);
+
+        } catch (NumberFormatException nf) {
+            JOptionPane.showMessageDialog(this, "El id debe ser un numero entero");
+
+        }
     }//GEN-LAST:event_jBMostrarActionPerformed
 
 
@@ -306,7 +323,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBInsertar;
     private javax.swing.JButton jBMostrar;
     private javax.swing.JCheckBox jCActivo;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -321,21 +338,33 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtNombre;
     // End of variables declaration//GEN-END:variables
 
-    private void armarCabecera (){
+    private void armarCabecera() {
         modelo.addColumn("Materia");
         modelo.addColumn("id Materia");
         modelo.addColumn("Año");
         modelo.addColumn("Estado");
         jTMateria.setModel(modelo);
-        
-    }
-    private void cargarDatos (Materia materia ){
-        modelo.addRow(new Object[]{
-            materia.getNombre(), materia.getIdMateria(), materia.getAnio(), materia.getEstado()
-            
-        });
-        
+
     }
 
+    private void cargarDatos(Materia materia) {
+        modelo.addRow(new Object[]{
+            materia.getNombre(), materia.getIdMateria(), materia.getAnio(), materia.isEstado()
+
+        });
+
+    }
+
+    public void llenarComboAlumnos() {
+        AlumnoData alumno = new AlumnoData();
+
+        List<Alumno> alumnos = alumno.listarAlumnosActivos();
+
+        jComboBoxAlumnos.removeAllItems();
+
+        for (Alumno a : alumnos) {
+            jComboBoxAlumnos.addItem(a.toString());
+        }
+    }
 
 }

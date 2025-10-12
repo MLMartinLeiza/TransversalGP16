@@ -26,7 +26,7 @@ public class MateriaData {
             PreparedStatement ps = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, m.getNombre());
             ps.setInt(2, m.getAnio());
-            ps.setInt(3, m.getEstado());
+            ps.setBoolean(3, m.isEstado());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -59,7 +59,7 @@ public class MateriaData {
                 materiaEncontrada.setIdMateria(rs.getInt("idMateria"));
                 materiaEncontrada.setNombre(rs.getString("nombre"));
                 materiaEncontrada.setAnio(rs.getInt("anio"));
-                materiaEncontrada.setEstado(rs.getInt("estado"));
+                materiaEncontrada.setEstado(rs.getBoolean("estado"));
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro la materia");
             }

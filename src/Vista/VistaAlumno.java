@@ -306,7 +306,6 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             Alumno alumno = new Alumno(dni, apellido, nombre, fecha, estado);
             alumnoData.guardarAlumno(alumno);
 
-            JOptionPane.showMessageDialog(this, "Alumno insertado correctamente.");
             limpiarCampos();
             cargarTabla();
         } catch (Exception e) {
