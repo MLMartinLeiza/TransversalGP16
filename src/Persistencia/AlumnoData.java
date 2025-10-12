@@ -50,7 +50,7 @@ public class AlumnoData {
 
     public void actualizarAlumno(Alumno a) {
 
-        String query = "UPDATE alumno SET dni= ?, apellido = ?, nombre = ?, fechaNacimiento = ? "
+        String query = "UPDATE alumno SET dni= ?, apellido = ?, nombre = ?, fechaNacimiento = ?, estado = ? "
                 + "WHERE idAlumno = ?";
 
         try {
@@ -60,7 +60,8 @@ public class AlumnoData {
             ps.setString(2, a.getApellido());
             ps.setString(3, a.getNombre());
             ps.setDate(4, Date.valueOf(a.getFechaNacimiento()));
-            ps.setInt(5, a.getIdAlumno());
+            ps.setBoolean(5, a.isEstado());
+            ps.setInt(6, a.getIdAlumno());
 
             int actualizado = ps.executeUpdate();
 
@@ -145,8 +146,8 @@ public class AlumnoData {
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setInt(1, idAlumno); //Le damos el valor
-            int actualisado = ps.executeUpdate(); // Nos da el valor de las filas modificadas
-            if (actualisado == 1) {
+            int actualizado = ps.executeUpdate(); // Nos da el valor de las filas modificadas
+            if (actualizado == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno dado de baja correctamente");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro al alumno con ese ID");
@@ -163,8 +164,8 @@ public class AlumnoData {
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setInt(1, idAlumno); //Le damos el valor
-            int actualisado = ps.executeUpdate(); // Nos da el valor de las filas modificadas
-            if (actualisado == 1) {
+            int actualizado = ps.executeUpdate(); // Nos da el valor de las filas modificadas
+            if (actualizado == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno dado de alta correctamente");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontro al alumno con ese ID");
