@@ -272,6 +272,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
             Materia m = new Materia(nombre, anio, estado);
             m.setIdMateria(id);
+            materiaData.modificarMateria(m);
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al actualizar materia " + e.getMessage());
