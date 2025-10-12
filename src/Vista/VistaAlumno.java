@@ -21,7 +21,8 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+        modeloTabla = (DefaultTableModel) jTableAlumnos.getModel();
+        armarCabeceraTabla();
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +47,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jbmostrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAlumnos = new javax.swing.JTable();
         jbinsertar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -72,18 +73,6 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("DNI");
 
         jLabel7.setText("Fecha de nacimiento");
-
-        jtnombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtnombreActionPerformed(evt);
-            }
-        });
-
-        jtdni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtdniActionPerformed(evt);
-            }
-        });
 
         jCheckBox1.setText("Activo");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,8 +110,13 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         });
 
         jbmostrar.setText("Mostrar");
+        jbmostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbmostrarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,7 +127,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableAlumnos);
 
         jbinsertar.setText("Insertar");
         jbinsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -318,13 +312,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbeliminarActionPerformed
 
-    private void jtnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtnombreActionPerformed
-
-    }//GEN-LAST:event_jtnombreActionPerformed
-
-    private void jtdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtdniActionPerformed
-
-    }//GEN-LAST:event_jtdniActionPerformed
+    private void jbmostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbmostrarActionPerformed
+       cargarTabla();
+    }//GEN-LAST:event_jbmostrarActionPerformed
 
     private void limpiarCampos() {
         jtnombre.setText("");
@@ -358,7 +348,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         modeloTabla.addColumn("Nombre");
         modeloTabla.addColumn("Fecha Nac.");
         modeloTabla.addColumn("Activo");
-        jTable1.setModel(modeloTabla);
+        jTableAlumnos.setModel(modeloTabla);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -372,7 +362,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAlumnos;
     private javax.swing.JButton jbactualizar;
     private javax.swing.JButton jbalta;
     private javax.swing.JButton jbbaja;
