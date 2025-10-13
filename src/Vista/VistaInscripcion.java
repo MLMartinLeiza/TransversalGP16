@@ -7,6 +7,10 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
     
     public VistaInscripcion() {
         initComponents();
+        setClosable(true);
+        setIconifiable(true);
+        setResizable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
