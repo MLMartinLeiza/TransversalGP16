@@ -21,6 +21,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuFormularioAlumnos = new javax.swing.JMenuItem();
         jMenuMateria = new javax.swing.JMenu();
         jMenuFormularioMateria = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +63,18 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuPrincipal.add(jMenuMateria);
 
+        jMenu1.setText("Inscripcion");
+
+        jMenuItem1.setText("Formulario Inscripcion");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuPrincipal.add(jMenu1);
+
         setJMenuBar(jMenuPrincipal);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -96,6 +110,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
        vistaMateria.setVisible(true);
     }//GEN-LAST:event_jMenuFormularioMateriaActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        VistaInscripcion vistaInscripcion = new VistaInscripcion();
+        jDesktopPane.add(vistaInscripcion);
+        vistaInscripcion.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(() -> new MenuPrincipal().setVisible(true));
@@ -103,9 +123,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenuAlumno;
     private javax.swing.JMenuItem jMenuFormularioAlumnos;
     private javax.swing.JMenuItem jMenuFormularioMateria;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jMenuMateria;
     private javax.swing.JMenuBar jMenuPrincipal;
     // End of variables declaration//GEN-END:variables

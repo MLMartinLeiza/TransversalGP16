@@ -369,7 +369,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBInsertar;
     private javax.swing.JButton jBMostrar;
     private javax.swing.JCheckBox jCActivo;
-    private javax.swing.JComboBox<String> jComboBoxAlumnos;
+    private javax.swing.JComboBox<Alumno> jComboBoxAlumnos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -409,7 +409,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         jComboBoxAlumnos.removeAllItems();
 
         for (Alumno a : alumnos) {
-            jComboBoxAlumnos.addItem(a.toString());
+            jComboBoxAlumnos.addItem(a);
         }
     }
 
