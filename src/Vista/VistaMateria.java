@@ -109,6 +109,11 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         });
 
         jBAlta.setText("Alta");
+        jBAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAltaActionPerformed(evt);
+            }
+        });
 
         jBBaja.setText("Baja");
 
@@ -292,6 +297,10 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
       try{
           int idMateria = Integer.parseInt(jTidMateria.getText());
+          int anio = Integer.parseInt(jtAnio.getText());
+            String nombre = jtNombre.getText();
+            boolean estado = jCActivo.isSelected();
+          
         materiaData.eliminarMateria(idMateria);
         
       }catch (Exception e){
@@ -325,6 +334,31 @@ public class VistaMateria extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_jBMostrarActionPerformed
+
+    private void jBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAltaActionPerformed
+        // TODO add your handling code here:
+        try{
+        int idMateria = Integer.parseInt(jBAlta.getText());
+        String nombre = jtNombre.getText();
+        int anio = Integer.parseInt(jtAnio.getText());
+            boolean estado = jCActivo.isSelected();
+
+      
+        Materia m =  materiaData.buscarMateria(nombre);
+      
+        if (m != null){
+            m.setEstado(true);
+            materiaData.altaLogicaMateria(idMateria);
+            JOptionPane.showMessageDialog(this, "Materia dada de alta");
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "no se encontro la materia");
+        }
+        }catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "No se dio de alta la materia");
+        }
+         
+    }//GEN-LAST:event_jBAltaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
