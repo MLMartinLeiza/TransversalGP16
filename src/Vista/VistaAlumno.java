@@ -302,9 +302,15 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbinsertarActionPerformed
 
     private void jbeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbeliminarActionPerformed
+
+        int filaSeleccionada = jTableAlumnos.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            modeloTabla.removeRow(filaSeleccionada);
+        }
         try {
             int dni = Integer.parseInt(jtdni.getText());
             alumnoData.eliminarAlumnoDni(dni);
+
             limpiarCampos();
             cargarTabla();
         } catch (Exception e) {
@@ -313,7 +319,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbeliminarActionPerformed
 
     private void jbmostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbmostrarActionPerformed
-       cargarTabla();
+        cargarTabla();
     }//GEN-LAST:event_jbmostrarActionPerformed
 
     private void limpiarCampos() {
