@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -111,4 +112,87 @@ public class InscripcionData {
       }
       return null;
    }
+   public List<Materia> obtenerMateriasNoCursadas (int idAlumno) throws SQLException{
+      String query = "SELECT m.* FROM materia WHERE estado = 1 AND idMateria not in " 
+              + "(SELECT idMateria FROM inscripcion WHERE idAlumno = ?)";
+      
+      try{
+           PreparedStatement ps = conexion.prepareStatement(query);
+           ps.setInt(1, idAlumno);
+           ResultSet rs = ps.executeQuery();
+           
+           while (rs.next()){
+               Materia m = new Materia();
+               m.setIdMateria(rs.getInt("idMateria"));
+               m.setNombre(rs.getString ("Nombre"));
+               m.setAnio(rs.getInt("Año"));
+               m.setEstado(rs.getBoolean("Estado"));
+               Materia.add(m);
+
+           }  
+           ps.close();
+      }catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Error al mostrar materias cursadas");
+
+          
+      }
+      return null;
+   }
+   
+    public List<Materia> obtenerAlumnoPorMateria (int idMateria) throws SQLException{
+      String query = "SELECT m.idAlumno, dni, nombre, apellido, fechaNacimiento, estado " 
+              + "( FROM inscripcion i,alumno a WHERE  i.idAlumno = a.idAlumno AND idMateria = ? AND a.estado = 1)";
+      
+      try{
+           PreparedStatement ps = conexion.prepareStatement(query);
+           ps.setInt(1, idMateria);
+           ResultSet rs = ps.executeQuery();
+           
+           while (rs.next()){
+               Materia m = new Materia();
+               m.setIdMateria(rs.getInt("idMateria"));
+               m.setNombre(rs.getString ("Nombre"));
+               m.setAnio(rs.getInt("Año"));
+               m.setEstado(rs.getBoolean("Estado"));
+               Materia.add(m);
+
+           }  
+           ps.close();
+      }catch (SQLException e){
+                JOptionPane.showMessageDialog(null, "Error al no mostrar las materias no cursadas");
+
+          
+      }
+      return null;
+   }
+   
+    public List <Inscripcion > obtenerInscripcionesPorAlumno (int idAlumno) throws SQLException{
+        List <Inscripcion> inscripciones = new ArrayList <>();
+        
+        String query = "SELECT * FROM inscripcion WHERE idAlumno = ?";
+        
+        try {
+        PreparedStatement ps = conexion.prepareStatement(query);
+        ps.setInt(1, idAlumno);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+           Inscripcion ins = new Inscripcion ();
+           Alumno a = alumnoData.buscarAlumnoDni(rs.getInt("idAlumno"));
+           Materia m = materiaData.buscarMateria(rs.getString("idMateria"));
+           ins.setIdInscripcion(rs.getInt("IdInscripcion"));
+           ins.setAlumno(a);
+           ins.setMateria(m);
+           ins.setNota(rs.getDouble("nota"));
+           inscripciones.add(ins);
+               
+        }
+        ps.close();
+    
+    
+   }catch (SQLException e){
+       JOptionPane.showMessageDialog(null, "Error");
+   }
+    
+        return inscripciones;
+   
 }
