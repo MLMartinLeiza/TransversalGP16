@@ -1,9 +1,23 @@
 package Vista;
 
 import Modelo.Alumno;
+import Modelo.Materia;
+import Persistencia.AlumnoData;
+import Persistencia.InscripcionData;
+import Persistencia.MateriaData;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class VistaInscripcion extends javax.swing.JInternalFrame {
-
+    
+    private List<Alumno> alumnosCombo;
+    private List<Materia> listaM;
+    
+    private InscripcionData inscData;
+    private MateriaData matData;
+    private AlumnoData aluData;
+    private DefaultTableModel modelo;
     
     public VistaInscripcion() {
         initComponents();
@@ -11,6 +25,13 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        matData = new MateriaData();
+        listaM = matData.listarMaterias();
+        aluData = new AlumnoData();
+        alumnosCombo = aluData.listarAlumnosActivos();
+        modelo = new DefaultTableModel();
+        cargarAlumnos();
+        armarCabeceraTabla();
     }
 
     /**
@@ -77,7 +98,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(221, 221, 221))
                     .addGroup(layout.createSequentialGroup()
@@ -114,9 +135,9 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jRadioButtonNoInscriptas)
                     .addComponent(jRadioButtonInscriptas))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnInscribir)
                     .addComponent(jbtnAnularInsc))
@@ -139,4 +160,21 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbtnInscribir;
     private javax.swing.JTable jtFormInsc;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarAlumnos() {
+        for (Alumno a : alumnosCombo) {
+            jComboFormInsc.addItem(a);
+        }
+    }
+    
+    private void armarCabeceraTabla() {
+        List<Object> filaTabla = new ArrayList<>();
+        filaTabla.add("Id");
+        filaTabla.add("Nombre");
+        filaTabla.add("Año");
+        for (Object obj : filaTabla) {
+            modelo.addColumn(obj);
+        }
+        jtFormInsc.setModel(modelo);
+    }
 }
