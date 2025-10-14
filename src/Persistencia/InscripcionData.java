@@ -100,7 +100,7 @@ public class InscripcionData {
                m.setNombre(query);
                m.setAnio(idAlumno);
                m.setEstado(true);
-               materias.add(m);
+               Materia.add(m);
 
            }  
            ps.close();
@@ -109,6 +109,6 @@ public class InscripcionData {
 
           
       }
-      return materias;
+      return null;
    }
 }
