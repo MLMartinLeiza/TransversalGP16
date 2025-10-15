@@ -10,21 +10,22 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class VistaInscripcion extends javax.swing.JInternalFrame {
-    
+
     private List<Alumno> alumnosCombo;
     private List<Materia> listaM;
-    
+
     private InscripcionData inscData;
     private MateriaData matData;
     private AlumnoData aluData;
     private DefaultTableModel modelo;
-    
+
     public VistaInscripcion() {
         initComponents();
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        inscData = new InscripcionData();
         matData = new MateriaData();
         listaM = matData.listarMaterias();
         aluData = new AlumnoData();
@@ -34,7 +35,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         armarCabeceraTabla();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,8 +64,18 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         jLabel3.setText("Listado de Materias");
 
         jRadioButtonInscriptas.setText("Materias inscriptas");
+        jRadioButtonInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonInscriptasActionPerformed(evt);
+            }
+        });
 
         jRadioButtonNoInscriptas.setText("Materias no inscriptas");
+        jRadioButtonNoInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonNoInscriptasActionPerformed(evt);
+            }
+        });
 
         jtFormInsc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -150,6 +160,22 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jRadioButtonNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNoInscriptasActionPerformed
+        borrarFilaTabla();
+        jRadioButtonInscriptas.setSelected(false);
+        cargarMateriasNoInsc();
+        jbtnInscribir.setEnabled(true);
+        jbtnAnularInsc.setEnabled(false);
+    }//GEN-LAST:event_jRadioButtonNoInscriptasActionPerformed
+
+    private void jRadioButtonInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonInscriptasActionPerformed
+        borrarFilaTabla();
+        jRadioButtonNoInscriptas.setSelected(false);
+        cargarMateriasInsc();
+        jbtnAnularInsc.setEnabled(true);
+        jbtnInscribir.setEnabled(false);
+    }//GEN-LAST:event_jRadioButtonInscriptasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -170,7 +196,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             jComboFormInsc.addItem(a);
         }
     }
-    
+
     private void armarCabeceraTabla() {
         List<Object> filaTabla = new ArrayList<>();
         filaTabla.add("Id");
@@ -180,5 +206,33 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             modelo.addColumn(obj);
         }
         jtFormInsc.setModel(modelo);
+    }
+
+    private void borrarFilaTabla() {
+        int indice = modelo.getRowCount() - 1;
+
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void cargarMateriasNoInsc() {
+        Alumno aluSeleccionado = (Alumno) jComboFormInsc.getSelectedItem();
+
+        listaM = inscData.obtenerMateriasNoCursadas(aluSeleccionado.getIdAlumno());
+
+        for (Materia m : listaM) {
+            modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+        }
+    }
+
+    public void cargarMateriasInsc() {
+        Alumno aluSeleccionado = (Alumno) jComboFormInsc.getSelectedItem();
+
+        listaM = inscData.obtenerMateriasCursadas(aluSeleccionado.getIdAlumno());
+
+        for (Materia m : listaM) {
+            modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+        }
     }
 }
