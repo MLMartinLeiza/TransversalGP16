@@ -1,6 +1,7 @@
 package Vista;
 
 import Modelo.Alumno;
+import Modelo.Inscripcion;
 import Modelo.Materia;
 import Persistencia.AlumnoData;
 import Persistencia.InscripcionData;
@@ -10,21 +11,22 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class VistaInscripcion extends javax.swing.JInternalFrame {
-    
+
     private List<Alumno> alumnosCombo;
     private List<Materia> listaM;
-    
+
     private InscripcionData inscData;
     private MateriaData matData;
     private AlumnoData aluData;
     private DefaultTableModel modelo;
-    
+
     public VistaInscripcion() {
         initComponents();
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        inscData = new InscripcionData();
         matData = new MateriaData();
         listaM = matData.listarMaterias();
         aluData = new AlumnoData();
@@ -34,7 +36,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         armarCabeceraTabla();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -64,8 +65,18 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         jLabel3.setText("Listado de Materias");
 
         jRadioButtonInscriptas.setText("Materias inscriptas");
+        jRadioButtonInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonInscriptasActionPerformed(evt);
+            }
+        });
 
         jRadioButtonNoInscriptas.setText("Materias no inscriptas");
+        jRadioButtonNoInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonNoInscriptasActionPerformed(evt);
+            }
+        });
 
         jtFormInsc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,11 +93,26 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
         jbtnInscribir.setText("Inscribir");
         jbtnInscribir.setEnabled(false);
+        jbtnInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnInscribirActionPerformed(evt);
+            }
+        });
 
         jbtnAnularInsc.setText("Anular Inscripcion");
         jbtnAnularInsc.setEnabled(false);
+        jbtnAnularInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAnularInscActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,6 +176,54 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jRadioButtonNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNoInscriptasActionPerformed
+        borrarFilaTabla();
+        jRadioButtonInscriptas.setSelected(false);
+        cargarMateriasNoInsc();
+        jbtnInscribir.setEnabled(true);
+        jbtnAnularInsc.setEnabled(false);
+    }//GEN-LAST:event_jRadioButtonNoInscriptasActionPerformed
+
+    private void jRadioButtonInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonInscriptasActionPerformed
+        borrarFilaTabla();
+        jRadioButtonNoInscriptas.setSelected(false);
+        cargarMateriasInsc();
+        jbtnAnularInsc.setEnabled(true);
+        jbtnInscribir.setEnabled(false);
+    }//GEN-LAST:event_jRadioButtonInscriptasActionPerformed
+
+    private void jbtnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnInscribirActionPerformed
+        int filaSeleccionada = jtFormInsc.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            Alumno alumno = (Alumno) jComboFormInsc.getSelectedItem();
+
+            int idMateria = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+            String nombre = (String) modelo.getValueAt(filaSeleccionada, 1);
+            int anio = (Integer) modelo.getValueAt(filaSeleccionada, 2);
+
+            Materia materia = new Materia(idMateria, nombre, anio, true);
+
+            Inscripcion insc = new Inscripcion(alumno, materia, 0);
+            inscData.guardarInscripcion(insc);
+            borrarFilaTabla();
+        }
+    }//GEN-LAST:event_jbtnInscribirActionPerformed
+
+    private void jbtnAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnularInscActionPerformed
+        int filaSeleccionada = jtFormInsc.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            Alumno alumno = (Alumno) jComboFormInsc.getSelectedItem();
+            int idMateria = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+
+            inscData.borrarInscripcion(alumno.getIdAlumno(), idMateria);
+            borrarFilaTabla();
+        }
+    }//GEN-LAST:event_jbtnAnularInscActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -170,7 +244,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             jComboFormInsc.addItem(a);
         }
     }
-    
+
     private void armarCabeceraTabla() {
         List<Object> filaTabla = new ArrayList<>();
         filaTabla.add("Id");
@@ -181,4 +255,33 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         }
         jtFormInsc.setModel(modelo);
     }
+
+    private void borrarFilaTabla() {
+        int indice = modelo.getRowCount() - 1;
+
+        for (int i = indice; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
+    private void cargarMateriasNoInsc() {
+        Alumno aluSeleccionado = (Alumno) jComboFormInsc.getSelectedItem();
+
+        listaM = inscData.obtenerMateriasNoCursadas(aluSeleccionado.getIdAlumno());
+
+        for (Materia m : listaM) {
+            modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+        }
+    }
+
+    public void cargarMateriasInsc() {
+        Alumno aluSeleccionado = (Alumno) jComboFormInsc.getSelectedItem();
+
+        listaM = inscData.obtenerMateriasCursadas(aluSeleccionado.getIdAlumno());
+
+        for (Materia m : listaM) {
+            modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
+        }
+    }
+
 }
