@@ -196,3 +196,5 @@ public class InscripcionData {
         return inscripciones;
    
 }
+    }
+
