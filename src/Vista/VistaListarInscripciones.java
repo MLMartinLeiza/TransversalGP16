@@ -25,7 +25,7 @@ public class VistaListarInscripciones extends javax.swing.JInternalFrame {
         cargarCombo();
     }
     
-    // FALTA LISTAR ALUMNOS EN LA TABLA AL SELECCIONAR UN ALUMNO DEL COMBO
+    // FALTA LISTAR INSCRIPCIONES EN LA TABLA AL SELECCIONAR UN ALUMNO DEL COMBO
 
     private void armarCabecera() {
         List<Object> filaTabla = new ArrayList<>();
