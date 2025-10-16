@@ -1,6 +1,7 @@
 package Vista;
 
 import Modelo.Alumno;
+import Modelo.Inscripcion;
 import Modelo.Materia;
 import Persistencia.AlumnoData;
 import Persistencia.InscripcionData;
@@ -92,6 +93,11 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
         jbtnInscribir.setText("Inscribir");
         jbtnInscribir.setEnabled(false);
+        jbtnInscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnInscribirActionPerformed(evt);
+            }
+        });
 
         jbtnAnularInsc.setText("Anular Inscripcion");
         jbtnAnularInsc.setEnabled(false);
@@ -176,6 +182,22 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         jbtnInscribir.setEnabled(false);
     }//GEN-LAST:event_jRadioButtonInscriptasActionPerformed
 
+    private void jbtnInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnInscribirActionPerformed
+        int filaSeleccionada = jtFormInsc.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            Alumno alumno = (Alumno) jComboFormInsc.getSelectedItem();
+
+            int idMateria = (Integer) jtFormInsc.getValueAt(filaSeleccionada, 0);
+            String nombre = (String) jtFormInsc.getValueAt(filaSeleccionada, 1);
+            int anio = (Integer) jtFormInsc.getValueAt(filaSeleccionada, 2);
+
+            Materia materia = new Materia(idMateria, nombre, anio, true);
+
+            Inscripcion insc = new Inscripcion(alumno, materia, 0);
+            borrarFilaTabla();
+        }
+    }//GEN-LAST:event_jbtnInscribirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -235,4 +257,5 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             modelo.addRow(new Object[]{m.getIdMateria(), m.getNombre(), m.getAnio()});
         }
     }
+
 }
