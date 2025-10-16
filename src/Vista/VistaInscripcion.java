@@ -101,8 +101,18 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
         jbtnAnularInsc.setText("Anular Inscripcion");
         jbtnAnularInsc.setEnabled(false);
+        jbtnAnularInsc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAnularInscActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,16 +197,32 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
         if (filaSeleccionada != -1) {
             Alumno alumno = (Alumno) jComboFormInsc.getSelectedItem();
 
-            int idMateria = (Integer) jtFormInsc.getValueAt(filaSeleccionada, 0);
-            String nombre = (String) jtFormInsc.getValueAt(filaSeleccionada, 1);
-            int anio = (Integer) jtFormInsc.getValueAt(filaSeleccionada, 2);
+            int idMateria = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+            String nombre = (String) modelo.getValueAt(filaSeleccionada, 1);
+            int anio = (Integer) modelo.getValueAt(filaSeleccionada, 2);
 
             Materia materia = new Materia(idMateria, nombre, anio, true);
 
             Inscripcion insc = new Inscripcion(alumno, materia, 0);
+            inscData.guardarInscripcion(insc);
             borrarFilaTabla();
         }
     }//GEN-LAST:event_jbtnInscribirActionPerformed
+
+    private void jbtnAnularInscActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAnularInscActionPerformed
+        int filaSeleccionada = jtFormInsc.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            Alumno alumno = (Alumno) jComboFormInsc.getSelectedItem();
+            int idMateria = (Integer) modelo.getValueAt(filaSeleccionada, 0);
+
+            inscData.borrarInscripcion(alumno.getIdAlumno(), idMateria);
+            borrarFilaTabla();
+        }
+    }//GEN-LAST:event_jbtnAnularInscActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
