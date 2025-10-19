@@ -70,12 +70,12 @@ public class InscripcionData {
     }
 
     public void cargarNotas(int idAlumno, int idMateria, double nota) {
-        String query = "UPDATE inscripcion SET nota = ? WHERE idMateria=? AND WEHRE idAlumno = ?";
+        String query = "UPDATE inscripcion SET nota = ? WHERE idMateria=? AND idAlumno = ?";
         try {
             PreparedStatement ps = conexion.prepareStatement(query);
             ps.setDouble(1, nota);
             ps.setInt(2, idAlumno);
-            ps.setInt(2, idMateria);
+            ps.setInt(3, idMateria);
             int filas = ps.executeUpdate();
 
             if (filas > 0) {
@@ -150,7 +150,10 @@ public class InscripcionData {
     public List<Materia> obtenerAlumnoPorMateria(int idMateria) {
         List<Materia> materias = new ArrayList<>();
         String query = "SELECT m.idAlumno, dni, nombre, apellido, fechaNacimiento, estado "
-                + "( FROM inscripcion i,alumno a WHERE  i.idAlumno = a.idAlumno AND idMateria = ? AND a.estado = 1)";
+                        + "( FROM inscripcion i,alumno a "
+                        + "WHERE  i.idAlumno = a.idAlumno "
+                            + "AND idMateria = ? "
+                            + "AND a.estado = 1)";
 
         try {
             PreparedStatement ps = conexion.prepareStatement(query);

@@ -32,7 +32,7 @@ public class MateriaData {
             ResultSet rs = ps.getGeneratedKeys();
 
             if (rs.next()) {
-                m.setIdMateria(1);
+                m.setIdMateria(rs.getInt(1));
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo obtener ID");
             }
