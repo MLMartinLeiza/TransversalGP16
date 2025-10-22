@@ -142,10 +142,9 @@ public class MateriaData {
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAnio(rs.getInt("anio"));
-                materias.add(materia);
-
-                ps.close();
+                materias.add(materia);       
             }
+            ps.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla materia");
         }
